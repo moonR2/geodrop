@@ -3,6 +3,7 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import { ChangeEvent, useEffect } from "react";
+import { HiMapPin } from "react-icons/hi2";
 
 const SearchBox = () => {
   const defaultValue = "875";
@@ -47,16 +48,18 @@ const SearchBox = () => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
-      <div className="relative">
+    <div
+      className="bg-white p-4 shadow-md border-gray-200 border"
+      style={{ width: "650px" }}
+    >
+      <div className="relative flex items-center">
         <input
           value={value}
           onChange={handleChange}
-          className="w-full h-12 px-4 border-gray-300 border rounded-lg pl-12"
+          className="w-full h-12 px-4 pl-12 text-black"
         />
-        <span className="absolute left-4 top-3">
-          {/* Aquí puedes poner el ícono de mapa, por ejemplo: */}
-          🗺️
+        <span className="absolute left-1 top-2">
+          <HiMapPin className="text-black text-2xl" />
         </span>
       </div>
     </div>
