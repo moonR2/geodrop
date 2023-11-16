@@ -1,21 +1,14 @@
 import usePlacesAutocomplete, {
   getGeocode,
-  getLatLng,
+  getZipCode,
 } from "use-places-autocomplete";
 import { ChangeEvent, useEffect } from "react";
 import { HiMapPin } from "react-icons/hi2";
-import { useState } from "react";
 import SearchResults from "./SearchResults";
 
 const SearchBox = () => {
   const defaultValue = "875";
-  const onSelectAddress = (
-    address: string,
-    lat: number | null,
-    lng: number | null,
-  ) => {
-    console.log(address, lat, lng);
-  };
+
   const {
     ready,
     value,
@@ -23,14 +16,13 @@ const SearchBox = () => {
     suggestions: { status, data },
     clearSuggestions,
   } = usePlacesAutocomplete({ debounce: 300, defaultValue });
-  const [selectedResult, setSelectedResult] = useState<string | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
     setValue(e.target.value);
-    setSelectedResult(null); // Limpiar el resultado seleccionado cuando se cambia la entrada
     if (e.target.value === "") {
-      onSelectAddress("", null, null);
+      setValue("");
+      //onSelectAddress("", null, null);
     }
   };
 
@@ -44,8 +36,9 @@ const SearchBox = () => {
 
     try {
       const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      onSelectAddress(address, lat, lng);
+      console.log("RESULTS", results);
+      const zipCode = await getZipCode(results[0], false);
+      console.log("ZIP CODE", zipCode);
     } catch (error) {
       console.error(`Error:`, error);
     }
@@ -68,13 +61,7 @@ const SearchBox = () => {
           </span>
         </div>
       </div>
-      <SearchResults
-        results={data || []}
-        onSelectResult={(placeId) => {
-          setSelectedResult(placeId);
-          // Puedes realizar acciones adicionales con el resultado seleccionado si es necesario
-        }}
-      />
+      <SearchResults results={data || []} onSelectResult={handleSelect} />
     </div>
   );
 };

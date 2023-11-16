@@ -11,7 +11,7 @@ interface SearchResult {
 
 interface SearchResultsProps {
   results: SearchResult[];
-  onSelectResult: (placeId: string) => void;
+  onSelectResult: (address: string) => void;
 }
 
 const SearchResults = ({ results, onSelectResult }: SearchResultsProps) => {
@@ -31,7 +31,7 @@ const SearchResults = ({ results, onSelectResult }: SearchResultsProps) => {
             <li
               key={result.place_id}
               className="cursor-pointer py-2 px-8 ml-4"
-              onClick={() => onSelectResult(result.place_id)}
+              onClick={() => onSelectResult(result.description)}
             >
               <div className="text-black">
                 {result.structured_formatting.main_text}
