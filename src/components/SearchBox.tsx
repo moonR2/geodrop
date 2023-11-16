@@ -1,4 +1,5 @@
 import { HiMapPin } from "react-icons/hi2";
+import { ChangeEvent } from "react";
 
 interface SearchBoxProps {
   value: string;

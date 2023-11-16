@@ -1,5 +1,7 @@
 import { useLoadScript, Libraries } from "@react-google-maps/api";
 import LocationSearchContainer from "@/components/LocationSearchContainer";
+import Modal from "@/components/Modal";
+import { useState } from "react";
 
 const libraries: Libraries = ["places"];
 
@@ -9,6 +11,8 @@ const Home = () => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries: libraries,
   });
+  const [showModalValidCode, setShowModalValidCode] = useState(false);
+  const [showModalInvalidCode, setShowModalInvalidCode] = useState(false);
 
   if (loadError) return <div>error</div>;
   if (!isLoaded) return <div>loading</div>;
@@ -16,6 +20,25 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 w-full">
       <div className="flex flex-col items-center justify-center flex-grow space-y-5">
+        {showModalValidCode && (
+          <Modal
+            title="Address updated"
+            subtitle="New address added to your account"
+            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            onClose={() => setShowModalValidCode(false)}
+            onConfirm={() => setShowModalValidCode(false)}
+          />
+        )}
+        {showModalInvalidCode && (
+          <Modal
+            title="Out of Delivery Area"
+            subtitle={`"Wherever I go, there I am."`}
+            message={`Sadly, this quote is not true for us. In other words, we are not operating in your area (yet), but things change every day.`}
+            submessage="Sign up to our newsletter to get notified."
+            onClose={() => setShowModalInvalidCode(false)}
+            onConfirm={() => setShowModalInvalidCode(false)}
+          />
+        )}
         <div className="space-y-20">
           <p className="text-black font-bold text-4xl mb-4">
             Where are you located?
@@ -33,8 +56,8 @@ const Home = () => {
         <div className="flex items-center justify-center w-full">
           <LocationSearchContainer
             defaultValue=""
-            onInvalidZipCode={() => console.log("invalid")}
-            onValidZipCode={() => console.log("valid")}
+            onInvalidZipCode={() => setShowModalInvalidCode(true)}
+            onValidZipCode={() => setShowModalValidCode(true)}
           />
         </div>
       </div>
