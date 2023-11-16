@@ -1,10 +1,10 @@
 import { useLoadScript, Libraries } from "@react-google-maps/api";
-import SearchBox from "../components/SearchBox";
+import LocationSearchContainer from "@/components/LocationSearchContainer";
 
 const libraries: Libraries = ["places"];
 
 const Home = () => {
-  // This help us lazy load the google maps script
+  // This help us lazy load the google maps script which is required by use-places-autocomplete
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries: libraries,
@@ -31,7 +31,11 @@ const Home = () => {
           </div>
         </div>
         <div className="flex items-center justify-center w-full">
-          <SearchBox />
+          <LocationSearchContainer
+            defaultValue=""
+            onInvalidZipCode={() => console.log("invalid")}
+            onValidZipCode={() => console.log("valid")}
+          />
         </div>
       </div>
     </div>
