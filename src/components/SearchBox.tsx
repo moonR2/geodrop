@@ -13,6 +13,7 @@ const SearchBox = ({ value, handleChange }: SearchBoxProps) => {
     >
       <div className="relative flex items-center">
         <input
+          type="text"
           value={value}
           onChange={handleChange}
           className="w-full h-12 px-4 pl-12 text-black outline-none focus:outline-none bg-transparent"

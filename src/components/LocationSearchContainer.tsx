@@ -18,6 +18,7 @@ const LocationSearchContainer = ({
   onValidZipCode,
   onInvalidZipCode,
 }: LocationSearchContainerProps) => {
+  // use-places-autocomplete hook helps us to easily interact with Google Maps Places API
   const {
     value,
     setValue,
@@ -33,6 +34,7 @@ const LocationSearchContainer = ({
     setValue(address, false);
 
     try {
+      // GeocoderResult from https://developers.google.com/maps/documentation/javascript/geocoding?hl=es-419#GeocodingResults
       const results = await getGeocode({ address });
       const zipCode = await getZipCode(results[0], false);
       const isValid = validateCode(Number(zipCode));
