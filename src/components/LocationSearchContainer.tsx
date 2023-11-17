@@ -19,7 +19,6 @@ const LocationSearchContainer = ({
   onInvalidZipCode,
 }: LocationSearchContainerProps) => {
   const {
-    ready,
     value,
     setValue,
     suggestions: { status, data },
@@ -53,7 +52,20 @@ const LocationSearchContainer = ({
   return (
     <div className="flex flex-col">
       <SearchBox value={value} handleChange={handleChange} />
-      <SearchResults results={data || []} onSelectResult={handleSelect} />
+      {status === "OK" && (
+        <SearchResults results={data || []} onSelectResult={handleSelect} />
+      )}
+      {status === "NOT_FOUND" ||
+        (status === "ZERO_RESULTS" && (
+          <div className="text-center">
+            <p className="text-black text-2xl mt-4">
+              We couldn&apos;t find that address
+            </p>
+            <p className="text-gray-500 text-m mb-4">
+              Try searching for another address
+            </p>
+          </div>
+        ))}
     </div>
   );
 };

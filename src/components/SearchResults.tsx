@@ -16,7 +16,7 @@ interface SearchResultsProps {
 
 const SearchResults = ({ results, onSelectResult }: SearchResultsProps) => {
   if (results.length === 0) {
-    return null; // No hay resultados, no renderiza nada
+    return null;
   }
 
   return (
@@ -26,13 +26,10 @@ const SearchResults = ({ results, onSelectResult }: SearchResultsProps) => {
           key={result.place_id}
           className="bg-white p-4 shadow-md border-gray-200 border max-h-40 hover:bg-gray-200"
           style={{ width: "650px" }}
+          onClick={() => onSelectResult(result.description)}
         >
           <div className="relative flex items-center">
-            <li
-              key={result.place_id}
-              className="cursor-pointer py-2 px-8 ml-4"
-              onClick={() => onSelectResult(result.description)}
-            >
+            <li key={result.place_id} className="cursor-pointer py-2 px-8 ml-4">
               <div className="text-black">
                 {result.structured_formatting.main_text}
               </div>
